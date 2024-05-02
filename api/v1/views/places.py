@@ -119,7 +119,7 @@ def place_delete_by_id(place_id):
 
 @app_views.route("/places_search", methods=["GET"],
                  strict_slashes=False)
-def places_by_city(states, cities, amenities):
+def get_places_with_filter(states, cities, amenities):
     """
     retrieves all Place objects filtering by states, cities,
     or amenities
