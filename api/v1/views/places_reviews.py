@@ -30,7 +30,7 @@ def reviews_by_place(place_id):
                  strict_slashes=False)
 def review_create(place_id):
     """
-    create REview route
+    create Review route
     :return: newly created Review obj
     """
     review_json = request.get_json(silent=True)

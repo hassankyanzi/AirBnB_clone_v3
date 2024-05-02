@@ -49,7 +49,7 @@ def unlink_amenity_from_place(place_id, amenity_id):
     found = 0
 
     for obj in fetched_obj.amenities:
-        if str(obj.id) == amenity_id:
+        if str(obj.id) == str(amenity_id):
             if getenv("HBNB_TYPE_STORAGE") == "db":
                 fetched_obj.amenities.remove(obj)
             else:
