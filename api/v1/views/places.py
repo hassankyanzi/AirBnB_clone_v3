@@ -129,18 +129,31 @@ def get_places_with_filter(states, cities, amenities):
 
     if data_json is None:
         abort(400, 'Not a JSON')
-    
+
+    places_list = []
     places = storage.get("Place")
     if places is not None:
-        states_list = data_json["states"]
-        if states_list is not None:
-            places = [place for place in places if place.city.state_id in states_list]
+        states_filter_list = data_json["states"]
+        cities_obj = storage.get("City")
+        if states_filter_list is not None:
+            for place in places:
+                for city_obj in cities_obj:
+                    if city_obj.id == place.city_id and city_obj.state_id in states_filter_list:
+                        places_list.append(place.to_json())
 
-        cities_list = data_json["cities"]
-        if cities_list is not None:
-            places = [place for place in places if place.city_id in cities_list]
+        cities_filter_list = data_json["cities"]
+        if cities_filter_list is not None:
+            for place in places:
+                if place.city_id in cities_filter_list:
+                    places_list.append(place.to_json())
 
-        amenities_list = data_json["amenities"]
-        if amenities_list is not None:
-            places = [place for place in places if place.amenities.id in cities_list]
-    return jsonify(places)
+        amenities_filter_list = data_json["amenities"]
+        if amenities_filter_list is not None:
+            for place in places:
+                amenities_list = place.amenities
+                if amenities_list is not None:
+                    for amenity_obj in amenities_list:
+                        if amenity_obj.id in amenities_filter_list:
+                            places_list.append(place.to_json())
+
+    return jsonify(places_list)

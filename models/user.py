@@ -37,7 +37,7 @@ class User(BaseModel, Base):
             pwd = kwargs.pop('password', None)
             if pwd is not None:
                 secure_pwd = md5(pwd.encode('utf8')).hexdigest()
-                kwargs['password'] = secure_pwd
+                setattr(kwargs, 'password', secure_pwd)
         super().__init__(*args, **kwargs)
 
     @property
