@@ -117,7 +117,7 @@ def place_delete_by_id(place_id):
     return jsonify({}), 200
 
 
-@app_views.route("/places_search", methods=["GET"],
+@app_views.route("/places_search", methods=["POST"],
                  strict_slashes=False)
 def get_places_with_filter(states, cities, amenities):
     """
