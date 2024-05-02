@@ -45,7 +45,7 @@ def unlink_amenity_from_place(place_id, amenity_id):
     if not storage.get("Amenity", str(amenity_id)):
         abort(404)
 
-    fetched_obj = storage.get("Place", place_id)
+    fetched_obj = storage.get("Place", str(place_id))
     found = 0
 
     for obj in fetched_obj.amenities:
@@ -62,7 +62,7 @@ def unlink_amenity_from_place(place_id, amenity_id):
         abort(404)
     else:
         resp = jsonify({})
-        resp.status_code = 201
+        resp.status_code = 200
         return resp
 
 
@@ -76,7 +76,6 @@ def link_amenity_to_place(place_id, amenity_id):
     :param amenity_id: amenity id
     :return: return Amenity obj added or error
     """
-
     fetched_obj = storage.get("Place", str(place_id))
     amenity_obj = storage.get("Amenity", str(amenity_id))
     found_amenity = None
@@ -85,12 +84,12 @@ def link_amenity_to_place(place_id, amenity_id):
         abort(404)
 
     for obj in fetched_obj.amenities:
-        if str(obj.id) == amenity_id:
+        if str(obj.id) == str(amenity_id):
             found_amenity = obj
             break
 
     if found_amenity is not None:
-        return jsonify(found_amenity.to_json())
+        return jsonify(found_amenity.to_json()), 200
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
         fetched_obj.amenities.append(amenity_obj)
