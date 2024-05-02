@@ -36,14 +36,14 @@ def review_create(place_id):
     review_json = request.get_json(silent=True)
     if review_json is None:
         abort(400, 'Not a JSON')
-    if not storage.get("Place", place_id):
-        abort(404)
-    if not storage.get("User", review_json["user_id"]):
-        abort(404)
     if "user_id" not in review_json:
         abort(400, 'Missing user_id')
     if "text" not in review_json:
         abort(400, 'Missing text')
+    if not storage.get("Place", str(place_id)):
+        abort(404)
+    if not storage.get("User", str(review_json["user_id"])):
+        abort(404)
 
     review_json["place_id"] = place_id
 
@@ -97,7 +97,7 @@ def review_put(review_id):
 
     fetched_obj.save()
 
-    return jsonify(fetched_obj.to_json())
+    return jsonify(fetched_obj.to_json()), 200
 
 
 @app_views.route("/reviews/<review_id>",  methods=["DELETE"],
@@ -117,4 +117,4 @@ def review_delete_by_id(review_id):
     storage.delete(fetched_obj)
     storage.save()
 
-    return jsonify({})
+    return jsonify({}), 200
