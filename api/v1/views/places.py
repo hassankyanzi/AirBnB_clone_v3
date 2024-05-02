@@ -115,3 +115,32 @@ def place_delete_by_id(place_id):
     storage.save()
 
     return jsonify({}), 200
+
+
+@app_views.route("/places_search", methods=["GET"],
+                 strict_slashes=False)
+def places_by_city(states, cities, amenities):
+    """
+    retrieves all Place objects filtering by states, cities,
+    or amenities
+    :return: json of all Places
+    """
+    data_json = request.get_json(silent=True)
+
+    if data_json is None:
+        abort(400, 'Not a JSON')
+    
+    places = storage.get("Place")
+    if places is not None:
+        states_list = data_json["states"]
+        if states_list is not None:
+            places = [place for place in places if place.city.state_id in states_list]
+
+        cities_list = data_json["cities"]
+        if cities_list is not None:
+            places = [place for place in places if place.city_id in cities_list]
+
+        amenities_list = data_json["amenities"]
+        if amenities_list is not None:
+            places = [place for place in places if place.amenities.id in cities_list]
+    return jsonify(places)

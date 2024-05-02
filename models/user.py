@@ -34,7 +34,7 @@ class User(BaseModel, Base):
         initialize User Model, inherits from BaseModel
         """
         if kwargs:
-            pwd = kwargs.pop('pwd', None)
+            pwd = kwargs.pop('password', None)
             secure_pwd = md5(pwd.encode('utf8')).hexdigest()
             kwargs['password'] = secure_pwd
         super().__init__(*args, **kwargs)
