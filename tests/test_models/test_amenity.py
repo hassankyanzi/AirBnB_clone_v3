@@ -89,7 +89,7 @@ class TestAmenityInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(self.amenity_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -112,6 +112,7 @@ class TestAmenityInstances(unittest.TestCase):
             actual = ''
         expected = "greatWifi"
         self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main

@@ -32,5 +32,6 @@ class TestHBNBCommandDocs(unittest.TestCase):
         actual = HBNBCommand.__doc__
         self.assertEqual(expected, actual)
 
+
 if __name__ == '__main__':
     unittest.main

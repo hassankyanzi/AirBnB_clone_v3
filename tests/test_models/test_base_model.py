@@ -117,7 +117,7 @@ class TestBaseModelInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(my_model_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -143,6 +143,7 @@ class TestBaseModelInstances(unittest.TestCase):
         self.model.number = 98
         actual = self.model.number
         self.assertTrue(98 == actual)
+
 
 if __name__ == '__main__':
     unittest.main

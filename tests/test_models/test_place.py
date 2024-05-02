@@ -89,7 +89,7 @@ class TestPlaceInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(self.place_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -112,6 +112,7 @@ class TestPlaceInstances(unittest.TestCase):
             actual = ''
         expected = 3
         self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main

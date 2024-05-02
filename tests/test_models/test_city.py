@@ -90,7 +90,7 @@ class TestCityInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(self.city_json)
-        except:
+        except Exception:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -113,6 +113,7 @@ class TestCityInstances(unittest.TestCase):
             actual = ''
         expected = 'IL'
         self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main

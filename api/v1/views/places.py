@@ -31,15 +31,15 @@ def place_create(city_id):
     """
     place_json = request.get_json(silent=True)
     if place_json is None:
-        abort(400, 'Not a JSON')
+        return abort(400, 'Not a JSON')
     if not storage.get("User", place_json["user_id"]):
-        abort(404)
+        return abort(404)
     if not storage.get("City", city_id):
-        abort(404)
+        return abort(404)
     if "user_id" not in place_json:
-        abort(400, 'Missing user_id')
+        return abort(400, 'Missing user_id')
     if "name" not in place_json:
-        abort(400, 'Missing name')
+        return abort(400, 'Missing name')
 
     place_json["city_id"] = city_id
 
@@ -112,4 +112,4 @@ def place_delete_by_id(place_id):
     storage.delete(fetched_obj)
     storage.save()
 
-    return jsonify({})
+    return jsonify({}), 200
